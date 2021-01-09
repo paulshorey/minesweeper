@@ -77,11 +77,6 @@ export default class MinesweeperClass {
     if (!cell) return;
     // change status of cell
     cell.opened = true;
-    // explode!
-    if (cell.bomb) {
-      this.gameOver();
-      return;
-    }
     // open neighbors
     this.neighboringBombs(cell, true);
   };
@@ -181,9 +176,6 @@ export default class MinesweeperClass {
     }
     return neighbors;
   };
-  gameOver = () => {
-    console.log("GAME OVER");
-  };
 
   isBomb(row_i, col_i) {
     return this.matrix[row_i][col_i].bomb;
@@ -208,10 +200,6 @@ export default class MinesweeperClass {
         if (cell.marked) {
           value = "M";
         }
-        /*
-         * Uncomment below line to preview 0/1 value of cell
-         */
-        // value = cell.bomb
         matrix[ri][ci] = value;
       }
     }

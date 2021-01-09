@@ -33,31 +33,27 @@ class GameComponent extends React.Component {
            */}
           <div className="controls">
             <fieldset className="ui_fieldset">
-              <label>Cells:&nbsp;</label>
-              <input type="number" value={this.state.gameOptions.n_columns} />
+              <label id="control-columns">Columns:&nbsp;</label>
+              <input aria-labelledby="control-columns" type="number" defaultValue={this.state.gameOptions.n_columns} />
             </fieldset>
             <fieldset className="ui_fieldset">
-              <label>Rows:&nbsp;</label>
-              <input type="number" value={this.state.gameOptions.n_rows} />
+              <label id="control-rows">Rows:&nbsp;</label>
+              <input aria-labelledby="control-rows" type="number" defaultValue={this.state.gameOptions.n_rows} />
             </fieldset>
             <fieldset className="ui_fieldset">
-              <label>Level:&nbsp;</label>
-              <select>
+              <label id="control-level">Level:&nbsp;</label>
+              <select aria-labelledby="control-level" defaultValue="medium">
                 <option value="easy">Easy</option>
-                <option value="medium" selected="selected">
-                  Medium
-                </option>
+                <option value="medium">Medium</option>
                 <option value="hard">Hard</option>
               </select>
             </fieldset>
             <fieldset className="ui_fieldset">
-              <label>Terrain:&nbsp;</label>
-              <select>
-                <option value="easy">Desert</option>
-                <option value="medium" selected="selected">
-                  Ocean
-                </option>
-                <option value="hard">Jungle</option>
+              <label id="control-terrain">Terrain:&nbsp;</label>
+              <select aria-labelledby="control-terrain" defaultValue="ocean">
+                <option value="desert">Desert</option>
+                <option value="ocean">Ocean</option>
+                <option value="jungle">Jungle</option>
               </select>
             </fieldset>
             <button className="">New game</button>
@@ -76,7 +72,6 @@ class GameComponent extends React.Component {
    * HELPER METHODS - have access to {this}
    *
    */
-
   renderGrid = () => {
     let Rows = [];
     this.state.grid.forEach((arr_of_cells, row_i) => {
@@ -87,15 +82,20 @@ class GameComponent extends React.Component {
 
   renderRow = (arr_of_cells, row_i) => {
     let Cells = [];
-    arr_of_cells.forEach((cell, cell_i) => {
-      Cells.push(this.renderCell(cell, row_i, cell_i));
+    arr_of_cells.forEach((cell, col_i) => {
+      Cells.push(this.renderCell(cell, row_i, col_i));
     });
-    return <div className="row">{Cells}</div>;
+    return (
+      <div key={row_i} className="row">
+        {Cells}
+      </div>
+    );
   };
 
   renderCell = (cell_value = "", row_i, cell_i) => {
     return (
       <div
+        key={row_i + "" + cell_i}
         className={"cell value_" + cell_value.toLowerCase()}
         onClick={() => {
           // get data
@@ -129,7 +129,7 @@ class GameComponent extends React.Component {
     // decide basic game parameters based on viewport width/height
     let viewOptions = { cell_width: 40 };
     viewOptions.n_columns = Math.round((window.innerWidth - viewOptions.cell_width * 2) / viewOptions.cell_width);
-    viewOptions.n_rows = Math.round((window.innerHeight - viewOptions.cell_width * 4) / viewOptions.cell_width);
+    viewOptions.n_rows = Math.round((window.innerHeight - viewOptions.cell_width * 5) / viewOptions.cell_width);
     // combine user + viewport parameters
     this.setState(
       {
@@ -144,17 +144,10 @@ class GameComponent extends React.Component {
         // after state is saved
         // new game data
         this.game = new MinesweeperClass(this.state.gameOptions);
-        /*
-         * TODO: This is an interesting problem ...
-         *   `new MinesweeperClass()` seems to be asynchronous ?!?
-         *   Needs this setTimeout. Otherwise, this.game.state is not reaady.
-         */
-        setTimeout(() => {
-          // render board by setting this.state.grid
-          this.setState({
-            grid: this.game.state
-          });
-        }, 600);
+        // render board by setting this.state.grid
+        this.setState({
+          grid: this.game.state
+        });
       }
     );
   };
