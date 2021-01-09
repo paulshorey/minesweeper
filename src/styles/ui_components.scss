@@ -1,0 +1,10 @@
+.ui_fieldset {
+  margin: 0;
+  padding: 0;
+  border: none;
+  position: relative;
+  display: flex;
+  > *:first-child {
+	flex-grow: 1;
+  }
+}
