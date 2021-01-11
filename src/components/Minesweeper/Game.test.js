@@ -8,7 +8,7 @@ it("renders controls", () => {
   expect(element).toBeInTheDocument();
 });
 
-it("automatically starts the game, makes the first safe move", async () => {
+it("automatically starts the game and makes the first safe move", async () => {
   render(<Game />);
   const element = document.querySelector(".value_0");
   const exploded_cells = document.querySelectorAll(".value_x");
@@ -30,11 +30,13 @@ it("should find a bomb eventually, after clicking each unopened cell one by one"
 it("on right-click, should mark the clicked cell as 'M'", async () => {
   render(<Game />);
   // any unopened cell
+  const m_cell_before = document.querySelector(".value_m");
   const unopened_cell = document.querySelector(".value_");
   // right-click on it
   fireEvent.click(unopened_cell, { button: 2 });
+  const m_cell_after = document.querySelector(".value_m");
   // should have marked that cell as "M"
   setTimeout(() => {
-    expect(document.querySelector(".value_m")).toBeInTheDocument();
-  }, 500);
+    expect(!m_cell_before && m_cell_after).toBeTruthy();
+  }, 300);
 });

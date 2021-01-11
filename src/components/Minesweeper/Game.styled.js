@@ -8,9 +8,9 @@ export const StyledGame = styled.div`
   box-sizing: border-box;
   user-select: none;
   .top {
-    padding: ${(pr) => pr.cell_width / 4}px ${(pr) => pr.cell_width / 2}px ${(pr) => pr.cell_width / 10}px;
+    padding: 1px ${(pr) => pr.cell_width}px 0;
     .message {
-      margin: 0 -${(pr) => pr.cell_width / 2}px;
+      margin: 0 -${(pr) => pr.cell_width}px;
       padding: ${(pr) => pr.cell_width / 3}px ${(pr) => pr.cell_width / 2}px;
       &.error {
         background: pink;
@@ -20,10 +20,9 @@ export const StyledGame = styled.div`
       }
     }
     .controls {
-      padding: ${(pr) => pr.cell_width / 3}px 0 ${(pr) => pr.cell_width / 3}px;
+      padding: ${(pr) => pr.cell_width / 2}px 0 ${(pr) => pr.cell_width / 3}px;
       display: flex;
       justify-content: space-around;
-      margin: 0 -0.33rem;
       button {
         border-color: white;
         background: #efefef;

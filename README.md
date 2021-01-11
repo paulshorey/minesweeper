@@ -16,7 +16,9 @@ Now, it's still challenging in the original way - when using the laptop trackpad
 
 ## TODO:
 
-- **Controls at the top are not yet functional!** For now, refresh the page to start a new game.
+- Display number of remaining bombs, and number uncovered.
+
+- **Controls at the top are not yet functional,** and need to be re-thought. For now, refresh the page to start a new game.
 
 - **It still needs more styling. Currently unfinished.**
 
@@ -35,4 +37,3 @@ You "mark" the spot where you think the Pokemon is. If you're right, you **catch
 Basic "Create React App". 1) `npm install` 2) `npm start`
 
 ## Quirks:
-

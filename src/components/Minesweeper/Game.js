@@ -32,6 +32,7 @@ class GameComponent extends React.Component {
            * USER CONTROLS:
            */}
           <div className="controls">
+
             <fieldset className="ui_fieldset">
               <label id="control-columns">Columns:&nbsp;</label>
               <input aria-labelledby="control-columns" type="number" defaultValue={this.state.gameOptions.n_columns} />
@@ -40,6 +41,7 @@ class GameComponent extends React.Component {
               <label id="control-rows">Rows:&nbsp;</label>
               <input aria-labelledby="control-rows" type="number" defaultValue={this.state.gameOptions.n_rows} />
             </fieldset>
+
             <fieldset className="ui_fieldset">
               <label id="control-level">Level:&nbsp;</label>
               <select aria-labelledby="control-level" defaultValue="medium">
@@ -129,7 +131,7 @@ class GameComponent extends React.Component {
     // decide basic game parameters based on viewport width/height
     let viewOptions = { cell_width: 40 };
     viewOptions.n_columns = Math.round((window.innerWidth - viewOptions.cell_width * 2) / viewOptions.cell_width);
-    viewOptions.n_rows = Math.round((window.innerHeight - viewOptions.cell_width * 5) / viewOptions.cell_width);
+    viewOptions.n_rows = Math.round((window.innerHeight - viewOptions.cell_width * 4) / viewOptions.cell_width);
     // combine user + viewport parameters
     this.setState(
       {

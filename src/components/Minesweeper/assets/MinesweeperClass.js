@@ -59,18 +59,6 @@ export default class MinesweeperClass {
     };
   };
 
-  markCell = (row, col) => {
-    // open cell for bomb
-    let cell = this.matrix[row][col];
-    if (!cell) return;
-    // change status of cell
-    if (!cell.opened || cell.marked) {
-      cell.marked = !cell.marked;
-    }
-    // open neighbors
-    // this.neighboringBombs(cell);
-  };
-
   openCell = (row, col) => {
     // open cell for bomb
     let cell = this.matrix[row][col];
@@ -78,7 +66,7 @@ export default class MinesweeperClass {
     // change status of cell
     cell.opened = true;
     // open neighbors
-    this.neighboringBombs(cell, true);
+    this.considerNeighbors(cell, true);
   };
 
   findSafeCellToStartWith = () => {
@@ -94,7 +82,7 @@ export default class MinesweeperClass {
         {
           let cell = this.matrix[row_l][col_l];
           if (!cell.bomb) {
-            let neighbors = this.getUnopenedNeighbors(cell);
+            let neighbors = this.getNeighbors(cell);
             if (this.countNeighborsWithBombs(neighbors) === 0) {
               return cell;
             }
@@ -104,7 +92,7 @@ export default class MinesweeperClass {
         {
           let cell = this.matrix[row_l][col_l];
           if (!cell.bomb && cell.neighbor_bombs === 0) {
-            let neighbors = this.getUnopenedNeighbors(cell);
+            let neighbors = this.getNeighbors(cell);
             if (this.countNeighborsWithBombs(neighbors) === 0) {
               return cell;
             }
@@ -126,53 +114,52 @@ export default class MinesweeperClass {
     return bombs;
   }
 
-  neighboringBombs = (cell, doOpen) => {
-    let neighbors = this.getUnopenedNeighbors(cell);
-
-    // count bombs of neighbors >> of clicked cell <<
-    let bombs = 0;
+  considerNeighbors = (cell, doOpen) => {
+    let neighbors = this.getNeighbors(cell);
+    cell.neighbor_bombs = this.countNeighborsWithBombs(neighbors);
+    // Count neighboring bombs of each neighbor.
     for (let ncell of neighbors) {
-      if (ncell.bomb) bombs++;
-    }
-    cell.neighbor_bombs = bombs;
-    if (cell.neighbor_bombs === 0) {
-      // count neighboring bombs of >> each neighbor of clicked cell <<
-      for (let ncell of neighbors) {
-        // Noramlly, mark it as opened, then open neighbors.
-        // However, with a special case, simply return the coordinates of first
-        // empty cell with mostly empty neighbors.
-        if (doOpen) {
+      // Count neighbors with bobs.
+      let neighbors = this.getNeighbors(ncell);
+      ncell.neighbor_bombs = this.countNeighborsWithBombs(neighbors);
+      // Normally, open neighbor if it has no neighboring bombs.
+      // However, with a special case, simply return the coordinates of first
+      // empty cell with mostly empty neighbors.
+      if (doOpen && !ncell.bomb) {
+        if (!ncell.opened && ncell.neighbor_bombs === 0) {
+          this.openCell(ncell.ri, ncell.ci);
+        } else {
           ncell.opened = true;
         }
-        this.neighboringBombs(ncell, doOpen);
       }
     }
   };
-  getUnopenedNeighbors = (cell) => {
+
+  getNeighbors = (cell) => {
     let neighbors = [];
     {
       let prev_cell = this.matrix[cell.ri][cell.ci - 1];
-      if (prev_cell && !prev_cell.opened) neighbors.push(prev_cell);
+      if (prev_cell) neighbors.push(prev_cell);
       let next_cell = this.matrix[cell.ri][cell.ci + 1];
-      if (next_cell && !next_cell.opened) neighbors.push(next_cell);
+      if (next_cell) neighbors.push(next_cell);
     }
     let prev_row = this.matrix[cell.ri - 1];
     if (prev_row) {
       let prev_cell = prev_row[cell.ci - 1];
-      if (prev_cell && !prev_cell.opened) neighbors.push(prev_cell);
+      if (prev_cell) neighbors.push(prev_cell);
       let curr_cell = prev_row[cell.ci];
-      if (curr_cell && !curr_cell.opened) neighbors.push(curr_cell);
+      if (curr_cell) neighbors.push(curr_cell);
       let next_cell = prev_row[cell.ci + 1];
-      if (next_cell && !next_cell.opened) neighbors.push(next_cell);
+      if (next_cell) neighbors.push(next_cell);
     }
     let next_row = this.matrix[cell.ri + 1];
     if (next_row) {
       let prev_cell = next_row[cell.ci - 1];
-      if (prev_cell && !prev_cell.opened) neighbors.push(prev_cell);
+      if (prev_cell) neighbors.push(prev_cell);
       let curr_cell = next_row[cell.ci];
-      if (curr_cell && !curr_cell.opened) neighbors.push(curr_cell);
+      if (curr_cell) neighbors.push(curr_cell);
       let next_cell = next_row[cell.ci + 1];
-      if (next_cell && !next_cell.opened) neighbors.push(next_cell);
+      if (next_cell) neighbors.push(next_cell);
     }
     return neighbors;
   };

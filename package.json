@@ -16,9 +16,14 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint src --max-warnings=0",
+    "test": "CI=true react-scripts test --coverage"
   },
+  "pre-commit": [
+    "lint",
+    "test"
+  ],
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -36,5 +41,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "precommit-hook": "^3.0.0"
   }
 }
