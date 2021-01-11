@@ -2,7 +2,7 @@
 
 This game was originally used to teach people how to use the computer mouse (which was then a new invention).
 
-Now, it's still challenging in the original way - when using the laptop trackpad - I meant to "two-finger tap" ("right click"), but I accidentally did a "one-finger tap" ("left click"). Oops! Exploded!
+Even now, it's a bit challenging in the original way - when using the laptop trackpad - I meant to "two-finger tap" ("right click"), but I accidentally did a "one-finger tap" ("left click"). Oops! Exploded!
 
 ![oops! left click vs right click](./docs/screenshots/tap-fail.png)
 
@@ -16,7 +16,7 @@ Now, it's still challenging in the original way - when using the laptop trackpad
 
 ## TODO:
 
-- Display number of remaining bombs, and number uncovered.
+- Display number of remaining bombs, and number of marked bombs.
 
 - **Controls at the top are not yet functional,** and need to be re-thought. For now, refresh the page to start a new game.
 
@@ -32,8 +32,15 @@ Getting a move wrong is very unsettling, unnerving, not fun! Would be nice to re
 
 You "mark" the spot where you think the Pokemon is. If you're right, you **catch that Pokemon**, and are rewarded with a nice fun graphic or animation. If you're wrong, the creature runs away, the cell becomes empty, and neighboring cells are uncovered as if you clicked on a cell which never had any bomb in the first place. However, the game should keep a tally of how many Pokemon ran away, versus how many you captured. The point would be to **"catch them all"!** But if you let a few escape, it would still be fun.
 
-## Install and play:
+## Usage:
 
-Basic "Create React App". 1) `npm install` 2) `npm start`
+`npm install`
+`npm start`
 
-## Quirks:
+### `npm run test`
+
+to run tests during development (watch for changes)
+
+### `git commit -m '...'`
+
+will trigger pre-commit hook, which will first `lint` and `test`, and prevent the commit if any test failed.

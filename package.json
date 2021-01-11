@@ -18,11 +18,12 @@
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "lint": "eslint src --max-warnings=0",
-    "test": "CI=true react-scripts test --coverage"
+    "test": "react-scripts test --coverage",
+    "test:ci": "CI=true react-scripts test --coverage"
   },
   "pre-commit": [
     "lint",
-    "test"
+    "test:ci"
   ],
   "eslintConfig": {
     "extends": [
