@@ -2,8 +2,6 @@
 
 This game was originally used to teach people how to use the computer mouse (which was then a new invention).
 
-Even now, it's a bit challenging in the original way - when using the laptop trackpad - I meant to "two-finger tap" ("right click"), but I accidentally did a "one-finger tap" ("left click"). Oops! Exploded!
-
 ![oops! left click vs right click](./docs/screenshots/tap-fail.png)
 
 ## This version
